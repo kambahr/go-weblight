@@ -35,9 +35,9 @@ Although content is rendered partially (the entire page is not rendered with eac
 
 This type of website may offer a user-experience close to that of a desktop application. Although this style of delivering content can be used for any environment, the following are some suitable scenarios.
 
-- When flickering effect is noticeable, while navigating inside your website.
 - When you want music running in the background, while navigating within your website.
-- Doc sites; where users go back and fourth, quickly and frequently to find content.
+- Doc sites; where users navigate back and fourth, quickly and frequently.
+- When flickering effect is noticeable.
 
 Fore more details, see notes in master/bare.html; or navigate to /bare and expand *notes*, while the website is running.
 
