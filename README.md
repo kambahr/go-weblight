@@ -2,7 +2,7 @@
 
 ## A one-page look & feel -- with operations of a full-feature website and Go managing the background work
 
-### Three different styles provided to demonstrate the use of multiple master pages within the same website 
+### Multiple master pages within the same website 
 
 #### Overview
 
