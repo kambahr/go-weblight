@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>    
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Sample Golang website . Kamiar Bahri</title>
+    <link rel="icon" type="image/png" href="/assets/img/guitar_partial_hand.png" />    
+    <link rel="stylesheet" href="/assets/scripts/bootstrap-4.3.1-dist/css/bootstrap.min.css" />
+    <script src="/assets/scripts/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="/assets/scripts/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/assets/scripts/quenubes/XMLHttpRequest.js"></script>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .container {
+        z-index: 6;
+        position: absolute;
+        margin-top: 226px;
+        margin-left:-12px;
+        width: auto;        
+        background-color:rgb(201, 231, 202);          
+        }
+        .quenubesLink{
+            cursor: pointer;
+            text-decoration: none;
+            color:rgb(69, 160, 250);            
+        }
+        .quenubesLink:hover{
+            cursor: pointer;
+            color:khaki;
+            transition: color 0.3s  ease-in-out;
+        }
+        .mainNavbar {
+        overflow: hidden;  
+        border-radius: 5px;
+        opacity: 0.85;
+        }
+        .mainNavbar quenubes-a {
+        opacity: 1.0;
+        z-index: 99;
+        float: left;
+        cursor: pointer;
+        text-align: center;
+        padding: 14px 26px;
+        text-decoration: none;
+        font-size: 18px;
+        }
+        .mainNavbar-active{
+            color:green;
+            font-weight: bold                     
+        }
+        .mainNavbar quenubes-a:hover {
+        color: rgb(45, 151, 41);
+        transition: color 0.3s;
+        }
+    </style>
+</head>
+<body>
+{{.ErrorPlaceHolder}}    
+<div style="width:99vw">
+    <header class="blog-header py-3">
+        <div class="row flex-nowrap justify-content-between align-items-center">
+          <div class="col-3 pt-1">
+            <a class="btn btn-sm btn-outline-success ml-2" 
+            xonclick="getContent('/', falsse);" 
+            style="cursor: pointer" href="{{.RootFullURL}}">&lt;&lt;&nbsp;Show My Website</a>
+          </div>
+          <div class="col-3 text-center">
+              <p class="muted-text mt-3">
+                  Sample website
+              </p>
+          </div>
+          <div class="col-3 text-center">
+            <p style="font-size:18pt;font-family: Arial, Helvetica, sans-serif;">
+            <div class="custom-control custom-switch">
+                <input type="checkbox" onchange="if(this.checked){
+                    $('#walkthroughNotes').fadeIn();
+                }else{$('#walkthroughNotes').fadeOut();}" class="custom-control-input" id="notesSwitches">
+                <label class="custom-control-label" style="font-size: 14pt;" for="notesSwitches">Notes</label>
+            </div>
+            </p>
+          </div>
+          <div class="col-3 d-flex justify-content-end align-items-center">
+            <a class="btn btn-sm btn-outline-success mr-2" monclick="getContent('/', false, 'blog')"
+             style="cursor: pointer" href="{{.RootFullURL}}/blog">Show Blog&nbsp;&gt;&gt;</a>
+          </div>
+        </div>
+      </header>    
+</div>
+    <div style="width:99vw;background-color: rgb(224, 224, 196)">
+        <div id="walkthroughNotes" class="row" style="display: none;">
+            <div class="col" style="background-color: thistle;">
+                <div style="margin-left:40px;overflow-y:auto;max-height: 460px;">
+                    <p style="position: relative;top:10px">This part of the page is loaded only once (unless the user presses
+                        F5).</p>
+                    <p class="mt-n1">All other contents are retreived in the background (i.e. when you click <a
+                            onclick="getContent('/bare/page_1.html');"
+                            style="cursor: pointer;color:dodgerblue;text-decoration: underline;">Page 1</a></span>).</p>
+                    <p class="mt-n2">Note that history is written via the <span style="font-size: 12pt;font-weight:500;color:rgb(17, 94, 170)"
+                            class="badge bg-default">window.onpopstate()</span> event (for a full user-experience).</p>
+                    <dl>
+                        <dt>Navigation</dt>
+                        <dd>
+                            <ul>
+                                <li>
+                                    Within the master page:  Use 
+                                    <span style="font-size: 12pt;font-weight:500;color:rgb(17, 94, 170)" class="badge bg-default">getContent(url).</span>
+                                </li>
+                                <li>Outside of the master page: Use the 
+                                    <span style="font-size: 12pt;font-weight:500;color:rgb(17, 94, 170)" class="badge bg-default">&lt;a&gt; tag.</span>
+                                    If the URL matches a path in the /serve-file directory, it will be served as-is without
+                                    a master page.
+                                </li>
+                            </ul>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>Javascript</dt>
+                        <dd>
+                            javascript code will not run in any of the conent pages by simply placing them 
+                            in &lt;script&gt; blocks; they will rather run in-line via firing an event:
+                            e.g. onclick="alert('hello world');"
+                            <p>If you want to use &lt;script&gt; blocks, you would have to place them inside the maser 
+                                page.
+                            </p>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>Search Enginges</dt>
+                        <dd>
+                            <p>
+                                Although content is rendered partially (the entire page not rendered with each request), search engines will still be able to retrieve the full content as that of a traditional website.                                 
+                            </p>
+                            <p>
+                                If you want to exclude a particulare page from search engines, you would have to 
+                                use dynamic placeholders for a meta tag in your target master file; as the following example:
+                            </p>
+                            <style>
+                            .mycode{
+                                display: block; 
+                                padding-top: 18px;
+                                font-size: 14px; 
+                                width: 100%;
+                                background-color: rgb(70, 69, 69);
+                                font-family: arial;
+                                color: #f7f7f7;
+                                font-weight: bold;                        
+                            }
+                            </style>                            
+                            <pre class="mycode">
+                            Place <span class="badge badge-warning" style="font-size:9.5pt">{{.MetaTagNoIndex}}</span> in the header section of the master file.
+                            Replace it with this: <span class="badge badge-warning"  style="font-size:9.5pt">&lt;meta name="robots" content="noindex"&gt;</span> for the the target page; 
+                            and replace it with <em>empty</em> string for all other pages.
+                            </pre>                            
+                        </dd>
+                    </dl>
+                    <p></p>
+                    <h5>Some Usage Example</h5>
+                    <p>
+                        This type of website, basically, loads faster and may offer a user-experience close to that of a desktop application. Although this style of delivering content can be used for any environment, the following are some suitable examples.
+                    </p>
+                    <ul class="mt-n2">
+                        <li>When flickering effect is noticeable, while navigating inside the website.</li>
+                        <li>When you want music running in the background, while navigating within your website.</li>
+                        <li>Doc sites; where users go back and fourth, quickly and frequently to find content.</li>
+                        </ul>                    
+                </div>
+            </div>
+            <div class="col">
+                <div class="card" style="width: 100%">
+                    <div class="card-body">                      
+                      <h5 class="card-title">Walk through</h5>
+                      <div style="overflow-y: auto;max-height: 380px;">
+                        <h6 class="card-subtitle mt-2 text-mutedd"><strong><span style="color:dodgerblue">Dynamic Content</span></strong></h6>
+                        <p class="card-text">You can place <span style="font-size: 12pt;font-weight:500;color:rgb(17, 94, 170)" class="badge bg-default">{{.VarName}}</span> 
+                          thoughout your page for the Go code to render your dynamic variables (or conent) before a request is returned from the website.
+                        </p>
+                        <h6 class="card-subtitle mt-2 text-mutedd"><strong><span style="color:dodgerblue">Directory Structure</span></strong></h6>
+                          <p class="card-text">The following is the directory structure for this sample site.</p>
+                          <style>
+                              .treex span{
+                                  font-size:12pt;
+                                  display: block;
+                                  float:left;
+                                  font-weight: 500;
+                                  color:rgb(17, 94, 170)
+                              }
+                          </style>
+                              <p>
+                              <table id="dirTree">
+                                  <tr><td class="treex"><span class="badge bg-default font-weight-bold">── html</span> </td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default font-weight-bold"><img width="25px" />├── errors</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default font-weight-bold"><img width="25px" />├── pages</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default font-weight-bold"><img width="25px" />├──├── bare</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default"><img width="25px" />├──├──├── index.html</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default"><img width="25px" />├──├──├── page_1.html</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default"><img width="25px" />├──├──├── page_2.html</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default"><img width="25px" />├──├──├── page_3.html</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default font-weight-bold"><img width="25px" />├──├──├── guitar</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default font-weight-bold"><img width="25px" />├──├──├──├── flamenco</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default font-weight-bold"><img width="25px" />├──├──├──├──├── soleares</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default"><img width="25px" />├──├──├──├──├── what-is-soleares.html</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default font-weight-bold"><img width="25px" />├──├── blog</span> </td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default"><img width="25px" />├──├──├── index.html</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default"><img width="25px" />├──├──├── new-features.html</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default"><img width="25px" />├──├──├── placeholder.html</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default"><img width="25px" />├──├──├── sample-blog-post.html</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default font-weight-bold"><img width="25px" />├──├── default</span> </td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default"><img width="25px" />├──├──├── index.html</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default"><img width="25px" />├──├──├── licence.html</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default"><img width="25px" />├──├──├── privacy-policy.html</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default"><img width="25px" />├──├──├── terms-of-use.html</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default font-weight-bold"><img width="25px" />├──├── master</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default"><img width="25px" />├──├──├── default.html</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default"><img width="25px" />├──├──├── blog.html</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default"><img width="25px" />├──├──├── bare.html</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default font-weight-bold"><img width="25px" />├──├── serve-file</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default font-weight-bold"><img width="25px" />├──├──├── music</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default font-weight-bold"><img width="25px" />├──├──├──├── theory</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default font-weight-bold"><img width="25px" />├──├──├──├──├── counterpoint</span></td></tr>
+                                  <tr><td class="treex"><span class="badge bg-default"><img width="25px" />├──├──├──├──├──├── what-is-counterpoint.html</span></td></tr>
+                              </table>
+                              </p>
+                              <p>
+                                  Each master page is loaded according to its URL (document.location.href). 
+                                  Pages that are not part of a master page, are placed 
+                                  in the <em>serve-file</em> directoy.
+                                  
+                              </p>                          
+                              <p class="mt-n3">
+                                  Paths in the root belong to the default master page. e.g. http://localhost:8080/contact.html.
+                              </p>
+                          <h6 class="card-subtitle mt-2 text-mutedd"><strong><span style="color:dodgerblue">HTTP Handlers</span></strong></h6>
+                          <p>There are only rwo handlers to process http requests.</p>
+                          <dl>
+                              <dt>
+                                  http.<span style="color:rgb(177, 132, 19)">HandleFunc</span>("/assets/", ws.Webutil.ServeStaticFile)
+                              </dt>
+                              <dd>
+                                  Handles all javscript, css, image,... files are placed in /assets directory.
+                              </dd>
+                              <dt>http.<span style="color:rgb(177, 132, 19)">HandleFunc</span>("/", ws.serveRoot)</dt>
+                              <dd>
+                                  Handles all html (content) requests.
+                              </dd>
+                          </dl>  
+                          <h6 class="card-subtitle mt-2 text-mutedd"><strong>
+                              <span style="color:dodgerblue">Page Not Found</span></strong></h6>
+                          <p>404 errors will display on the top of the master page; as the following example:</p>
+                          <div class="alert alert-warning" role="alert" style="font-size: 20pt;width:17em">
+                          <div style="text-align: center;">Error 404 - page not found</div>
+                          </div>                            
+                          <h6 class="card-subtitle mt-2 text-mutedd"><strong><span style="color:dodgerblue">Connection State</span></strong></h6>
+                          <p>The following are the two aspects of connection that are dealt with in the ConnState:</p>
+                          <p class="mt-n3"><span style="color:rgb(20, 114, 207)">
+                            func</span><span style="color:dimgray">&nbsp;(ws *website)</span>
+                            <span style="color:rgb(192, 145, 25)">&nbsp;connState</span><span style="color:dimgray">(conn net.Conn, connState http.ConnState)</span>
+                          </p>                                                                              
+                              <dt>
+                                  Security
+                              </dt>
+                              <dd>
+                                  You can block offenders by closing their connection before reaching the http handlers.
+                              </dd>
+                              <dt>Minimizing the 
+                                <span class="badge bg-warning">too many open files</span> error
+                              </dt>
+                              <dd>
+                                  <p>This type of error is mainly caused by mutliple sources making rapid 
+                                  requests within a short window of time, which causes the number of open file handles
+                                  to increase to a maximum.</p>
+                                <p>By setting the Deadline, ReadDeadline, and WriteDeadline to an appropriate value, risk of 
+                                  getting the <span class="badge bg-warning">too many open files</span> error is greatly reduced.
+                                </p>
+                              </dd>                                
+                          </dl>  
+                      </div>  
+                  </div> <!-- Card Body -->
+                <div>
+            </div>        
+            </div>
+            </div>
+        </div>
+        <style>
+            #menubare ul{
+                list-style: none;
+              }
+              #menu li{
+                display: inline;
+              }
+              </style>
+            <div id="menubare" class="mainNavbar" style="min-width:386px;height: 90px;">
+                <ul>
+                    <li><quenubes-a id="main-link-homepage" style="padding-left:30px" class="mainNavbar-active" onclick="selectNavItem(this);getContent('/bare');">Home</quenubes-a></li>
+                    <li><quenubes-a id="main-link-page1" onclick="selectNavItem(this);getContent('/bare/page_1.html');">Page 1</quenubes-a></li>
+                    <li><quenubes-a  id="main-link-page2" onclick="selectNavItem(this);getContent('/bare/page_2.html');">Page 2</quenubes-a></li>
+                    <li>
+                        <quenubes-a id="main-link-insidemaster" onclick="selectNavItem(this);getContent('/bare/guitar/flamenco/soleares/what-is-soleares.html');">
+                        <table>
+                            <tr><td>What is Soleares</td></tr>
+                            <tr><td><small style="position: relative;top:-10px">3 level deep</small></td></tr>
+                            <tr><td><small style="position: relative;top:-20px">inside master page</small></td></tr>
+                        </table>
+                        </quenubes-a>
+                    </li>
+                    <li>
+                        <quenubes-a onclick="getContent('/music/theory/counterpoint/what-is-counterpoint.html');">
+                        <table>
+                            <tr><td>What is Counterpoint</td></tr>
+                            <tr><td><small style="position: relative;top:-10px">outside of</small></td></tr>
+                            <tr><td><small style="position: relative;top:-20px">master page</small></td></tr>
+                        </table>
+                    </quenubes-a>
+                    </li>
+                </ul>
+            </div>        
+    </div>
+    <script>
+        function selectNavItem(sender){
+        let coll = document.getElementsByClassName('mainNavbar-active');
+        for(let i=0; i < coll.length; i++){
+          coll[i].className = '';
+        }
+        document.getElementById(sender.id).className = 'mainNavbar-active';
+    }
+    let v = document.location.href.split('/');
+    let u = v[v.length-1].toLocaleLowerCase();
+    u = u.replace('.html','');
+    switch (u){
+        case "what-is-soleares":
+            selectNavItem(document.getElementById('main-link-insidemaster'));
+            break;
+        case "page_2":
+            selectNavItem(document.getElementById('main-link-page2'));
+            break;
+        case "page_1":
+            selectNavItem(document.getElementById('main-link-page1'));
+            break;
+        case "bare":
+            selectNavItem(document.getElementById('main-link-homepage'));
+            break;
+    }
+    </script>      
+<style>
+    #scLinkxMain1 {
+        cursor: pointer;
+        text-decoration: none
+    }
+
+    #scLinkxMain1:hover {
+        cursor: pointer;
+        color: rgb(155, 142, 25);
+        transition: color 0.3s ease-in-out
+    }
+    .containerx {
+        width: auto;
+        max-width: 780px;
+        padding: 0 15px;
+        bottom: 0;
+        margin-bottom: 1px;
+        position: absolute;
+    }
+
+</style>
+<div style="margin-left: 40px;margin-top:10px">
+    <quebunes:div id="{{.MasterContentID}}">
+        <!-- All content -->
+    </quebunes:div>
+</div>
+<style>
+    #nbtmx ul{
+        width:100%;
+        list-style: none;
+      }
+    #nbtmx li{
+        font-size: 10pt;;
+        display: inline;
+        padding-left: 6px;
+    }
+</style>
+<script>
+var mPageKey = '{{.PageKey}}';
+{{.JSGetContent}}
+initPage();
+document.getElementById('notesSwitches').checked = false;
+</script>
+</body>  
+</html>

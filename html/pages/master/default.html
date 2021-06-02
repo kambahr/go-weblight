@@ -1,0 +1,239 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>    
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Golang sample website . Kamiar Bahri</title>
+    <link rel="icon" type="image/png" href="/assets/img/pexels-larissa-farber-7368395.jpg" />    
+    <link rel="stylesheet" href="/assets/scripts/bootstrap-4.3.1-dist/css/bootstrap.min.css" />
+    <script src="/assets/scripts/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="/assets/scripts/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/assets/scripts/quenubes/XMLHttpRequest.js"></script>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;background-color: black;
+        }
+        .master a{
+            color:white;
+            text-decoration:none;
+        }
+        .aSong span{
+            color:khaki;
+            transition: color 0.3s;
+            cursor:pointer;
+        }
+        .master a:hover{        
+            color:khaki;
+            transition: color 0.3s;
+        }
+        .container {
+        z-index: 6;
+        position: absolute;
+        margin-top: 226px;
+        margin-left:-12px;
+        width: auto;        
+        background-color:transparent;          
+        }
+
+        .mainNavbar {
+        overflow: hidden;  
+        border-radius: 5px;
+        opacity: 0.85;
+        }
+        .mainNavbar quenubes-a {
+        opacity: 1.0;
+        z-index: 99;
+        float: left;
+        color:#3f3f3f;;  
+        cursor: pointer;
+        text-align: center;
+        padding: 14px 26px;
+        text-decoration: none;
+        font-size: 18px;
+        }
+        .mainNavbar-active{
+            color:darkred;
+            font-weight: bold                     
+        }
+        .mainNavbar quenubes-a:hover {
+        color: rgb(59, 136, 57);
+        transition: color 0.3s;
+        }
+        
+        .bg-img { 
+        background-image: url("/assets/img/pexels-larissa-farber-7368395.jpg");
+        z-index: 1;
+        min-height: 280px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;          
+        position: relative;  
+        top:3px;                
+        }
+        #divFooter{   
+            background-color:rgb(41, 40, 40);
+            position: fixed;
+            left: 0;
+            bottom: 3px;
+            height: 25px;
+            width: 100%;
+            color: white;    
+            z-index: 13;
+            font-size: 12pt;
+            }
+
+        #divFooterPlayer{
+            position: fixed;
+            bottom:1px;
+            background-color: #d1caca;
+            width: 99.9%;
+        }              
+        .iconx{
+                height: 44px;
+                opacity: 0.6;
+            }
+            .iconx:hover{
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(71, 77, 69, 0.6);
+            }
+            .iconxsmall:hover{
+            box-shadow: 0 0.75px 1.25px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(71, 77, 69, 0.6);
+            }
+    </style>
+    <style>
+        .sub-page-cover h5 {
+            margin-top: 20px;
+            color:white;
+        }
+        .song:hover{
+            color:rgb(135, 228, 126);
+            transition: color 0.3s;
+            cursor:pointer;
+        }
+        .sub-page-cover table {
+            margin-left:20px;margin-top:20px; width: 400px;height:180px;border-radius: 10px; border: solid 1px #766666;         
+        }
+    
+        @media screen and (max-width: 768px) {
+            #frmContact {
+                max-width:460px;
+                text-align: left !important;
+            }
+        .col-md-6 {
+        text-align: center;
+        margin: 10px 0;
+        }
+        #aMainHome{
+            color: white;
+        }
+        #divFooter{
+            position: relative;
+        }
+        #tdTerm{
+            max-width: 50px;
+        }
+        #tdTermDiv{
+            margin-left:-20px;
+        }
+        #divFooter table{
+            margin-left:-30px;
+        }
+        #policyText{
+            display: none;
+        }
+        .sub-page-cover{
+            max-width:350px;
+            min-height: 420px;
+        }
+        .sub-page{
+            margin-left:-10px;
+        }        
+    }
+        .quenubesLink{
+            cursor: pointer;
+            text-decoration: none;
+            color:rgb(69, 160, 250);            
+        }
+        .quenubesLink:hover{
+            cursor: pointer;
+            color:khaki;
+            transition: color 0.3s  ease-in-out;
+        }
+    </style>
+</head>
+<body style="font-family: Arial, Helvetica, sans-serif;background-color: black;">
+{{.ErrorPlaceHolder}}    
+<div style="width:99vw">
+    <header class="blog-header py-3">
+        <div class="row flex-nowrap justify-content-between align-items-center mt-n3">
+          <div class="col-4 pt-1">
+            <a class="btn btn-sm btn-outline-secondary ml-2" style="cursor: pointer;" href="{{.RootFullURL}}/bare" >&lt;&lt;&nbsp;Show Bare</a>
+          </div>
+          <div class="col-4 text-center">
+            <p style="color:wheat;font-size:18pt;font-family: Arial, Helvetica, sans-serif;">My website
+                <span style="font-size:12pt; position: relative;left:15px; color:lawngreen">Sample Website</span>
+            </p>
+          </div>
+          <div class="col-4 d-flex justify-content-end align-items-center">
+            <a class="btn btn-sm btn-outline-success mr-2" href="{{.RootFullURL}}/blog" style="cursor: pointer;">Show Blog&nbsp;&gt;&gt;</a>
+          </div>
+        </div>
+      </header>    
+</div>
+    <div style="width:99vw">
+    <div class="bg-img">        
+        <div class="container">
+            <div class="mainNavbar" style="background-color:transparent;min-width:386px;margin-left:-4px">
+                <quenubes-a  style="padding-left:30px" class="mainNavbar-active" id="aMainHome" name="mainNabarA" onclick="getContent('/');selectMainNavbar('aMainHome');">home</quenubes-a>
+                <quenubes-a id="aMainContact" name="mainNabarA" onclick="getContent('/contact');selectMainNavbar('aMainContact');">contact</quenubes-a>
+              </div>    
+        </div>    
+    </div>
+    </div>
+    <style>
+        #scLinkxMain1{cursor: pointer;text-decoration: none}
+        #scLinkxMain1:hover{cursor: pointer;color:rgb(175, 165, 71);transition: color 0.3s  ease-in-out}
+    </style>    
+    <div onclick="window.parent.location.href = '/some-other'" 
+    style="z-index: 5; position: absolute; top:125px;left:18px;color:#707070;cursor: pointer;">
+    <quenubes-span id="scLinkxMain1" style="font-size: 12pt">Some other page (leaving the master page)</quenubes-span>
+    </div>    
+        <quebunes:div class="master" id="{{.MasterContentID}}">
+            <!-- All content -->
+        </quebunes:div>
+        <div id="divFooter" class="d-flex justify-content-center">           
+            <table style="font-size:9pt;text-align:center;color:white;margin-top: 2.5px;width:300px">
+                <tr>
+                    <td id="tdTerm">
+                        <div id="tdTermDiv" class="song"  onclick="getContent('/terms-of-use')">Terms<span id="ofUseText"> of Use</span></div>
+                    </td>
+                    <td>
+                        <div class="song" id="footerPrivacyPolicy" onclick="getContent('/privacy-policy')">
+                            <div style="display: block;" >Privacy<span id="policyText"> Policy</span></div>
+                        </div>                        
+                    </td>
+                    <td>
+                        <div class="song" onclick="getContent('/about')">About</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    function selectMainNavbar(senderId){
+    let coll = document.getElementsByName('mainNabarA');
+    for (let i=0; i < coll.length;i++){
+        coll[i].className='';
+    }
+    document.getElementById(senderId).className='mainNavbar-active'; 
+}
+</script>
+<script>
+    var mPageKey = '{{.PageKey}}';
+    {{.JSGetContent}}    
+    initPage();
+</script>
+
+</body>  
+</html>

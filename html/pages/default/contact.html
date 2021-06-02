@@ -1,0 +1,50 @@
+﻿{{.TopJS}}
+<div style="padding:40px 40px;color:white">
+    <style>
+        #scLinkx1,#scLinkx2,#scLinkx3{cursor: pointer;text-decoration: none;color:rgb(69, 160, 250); }
+        #scLinkx1:hover,#scLinkx2:hover,#scLinkx3:hover{cursor: pointer;color:khaki;transition: color 0.3s  ease-in-out;}
+    </style>    
+
+    <h3 class="mt-n3">Contact</h3>
+    <br />   
+    <div class="alert alert-success" role="alert" id="msgSuccess" style="width:450px;display:none" >
+      <span class="ml-5">Thank you for sumbitting your message!</span>
+    </div>
+
+    <form action="javascript:submitContactInfo();" id="frmContact" 
+    style="max-width:500px;text-align: left;">
+        <div class="form-row">
+          <div class="col-md-12 mb-3">
+            <label for="cname">Name</label>
+            <input type="text" maxlength="150" name="name"
+             class="form-control needs-validation" id="cname" value="" required>
+            <div class="valid-feedback">
+            </div>
+          </div>
+        </div>
+          <div class="form-row">
+          <div class="col-md-12 mb-3">
+            <label for="cemail">Email</label>
+            <input type="email" 
+            maxlength="150" name="email" class="form-control needs-validation" 
+            id="cemail" value="" required>
+            <div class="valid-feedback">
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-12 mb-3">
+            <label for="cmessage">Message</label>
+            <textarea type="text" maxlength="1000" style="min-height: 110px;max-height: 110px;" 
+             name="message" class="form-control needs-validation" id="cmessage" 
+            aria-describedby="validationServer03Feedback" required></textarea>
+            <div id="validationServer03Feedback" class="invalid-feedback">
+              Please enter a message.
+            </div>
+          </div>
+        </div>  
+        <button class="btn btn-outline-primary btn-lg  btn-block" it="btnSendMsg"
+        style="display: block;color:white" type="submit">Send</button>        
+    </form>
+    <br />
+  </div> 

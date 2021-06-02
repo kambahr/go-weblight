@@ -35,3 +35,9 @@ This type of website, basically, loads faster and may offer a user-experience cl
 - Doc sites; where users go back and fourth, quickly and frequently to find content.
 
 Fore more details, run the sample and see *notes* on the /bare path.
+
+#### Running the website
+
+- Start a shell window.
+- go build -o weblight && ./weblight --portno 8080
+- Navigate to http:&#47;&#47;localhost:8080
