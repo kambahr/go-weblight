@@ -1,17 +1,20 @@
 # A Go website template with multiple master pages
 
-## Weblight is an alternative way of presenting a website: a one-page look&feel -- with operations of a full-feature website with Go managing the background work.
+## A one-page look & feel -- with operations of a full-feature website and Go managing the background work
 
-### Three different styles have been included to demonstrate the use of multiple master pages inside the same website. 
+### Three different styles provided to demonstrate the use of multiple master pages within the same website 
 
 #### Overview
 
-The main body of the page is loaded (master-page) once; and  all other contents are retrieved in the background.
+The main body (master-page) is loaded once and all other contents are retrieved in the background.
 
 #### Browser History
+
 The browser history is written via the window.onpopstate() event (for a full user-experience).
 
 #### Navigation
+
+##### Within Master Page
 
 Within the master page, getContent(), javascript, function gets the content (simulating href of an A tag); and
 to get to the outside of the master page: the &lt;a&gt; tag is used. The web server will know whether to responde with a master page or a single (independent) page.
