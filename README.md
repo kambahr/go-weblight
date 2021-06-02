@@ -17,9 +17,8 @@ Within the master page, getContent(), javascript, function gets the content (sim
 To get to the outside of the master page: the &lt;a&t; tag is used. The web server will know whether to send response with the master page or a single page independently.
 
 #### Javascript
-javascript code will not run in any of the content pages by simply placing them in <script> blocks; but it will run in-line, upon firing events: e.g. onclick="alert('hello world');"  &lt;script&gt; blocks can only be used inside the maser page.
 
-&lt;script&gt; blocks can only be used inside the maser page.
+javascript code will not run in any of the content pages by simply placing them in <script> blocks; but it will run in-line, upon firing events: e.g. onclick="alert('hello world');"  &lt;script&gt; blocks can only be used inside the maser page.
 
 #### Search Engines
 
