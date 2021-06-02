@@ -34,5 +34,3 @@ This type of website, basically, loads faster and may offer a user-experience cl
 - When flickering effect is noticeable, while navigating inside the website.
 - When you want music running in the background, while navigating within your website.
 - Doc sites; where users go back and fourth, quickly and frequently to find content.
-
-And... with Go managing the background work!
