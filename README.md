@@ -13,8 +13,8 @@ The browser history is written via the window.onpopstate() event (for a full use
 
 #### Navigation
 
-Within the master page, getContent(), javascript, function gets the content (simulating href of an A tag).
-To get to the outside of the master page: the &lt;a&t; tag is used. The web server will know whether to send response with the master page or a single page independently.
+Within the master page, getContent(), javascript, function gets the content (simulating href of an A tag); and
+to get to the outside of the master page: the &lt;a&gt; tag is used. The web server will know whether to responde with a master page or a single (independent) page.
 
 #### Javascript
 
@@ -33,3 +33,5 @@ This type of website, basically, loads faster and may offer a user-experience cl
 - When flickering effect is noticeable, while navigating inside the website.
 - When you want music running in the background, while navigating within your website.
 - Doc sites; where users go back and fourth, quickly and frequently to find content.
+
+Fore more details, run the sample and see *notes* on the /bare path.
