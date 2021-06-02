@@ -3,19 +3,7 @@ function initPage(){
     setTimeout(function(){getContent(document.location.href, false);},50);
     setTimeout(function(){getJSCode()},150);
 }
-function hiddenJS(){
-    eval(jscode);
-}
-function getJSCode() { 
-    let q = new quenubesHTTP ('/getjsCode?key=dummyparam','GET',{},{},
-    function (res) {   
-        if(res.statusCode == 200){
-            jscode = res.responseText;
-        }
-    }        
-  );
-  q.call();
-}
+
 function getContent(urlx, nohistory){
     let masterC = document.getElementById('{{.MasterContentID}}');    
     var q = new quenubesHTTP (
