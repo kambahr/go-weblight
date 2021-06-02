@@ -14,30 +14,32 @@ The browser history is written via the window.onpopstate() event (for a full use
 
 #### Navigation
 
-##### Within Master Page
+##### Within A Master Page
 
-Within the master page, getContent(), javascript, function gets the content (simulating href of an A tag); and
-to get to the outside of the master page: the &lt;a&gt; tag is used. The web server will know whether to responde with a master page or a single (independent) page.
+There are two ways to navigate from (within) a master page.
+
+- Via getContent() - a javascript function that gets the content in the background (simulating href of an A tag).
+- Using the href of a &lt;a&gt; tag, which moves away from the current master page (traditional way).
+ 
+The web server is able to distinguish between a master page and a single (independent) page in order to respond accordingly.
 
 #### Javascript
 
-javascript code will not run in any of the content pages by simply placing them in <script> blocks; but it will run in-line, upon firing events: e.g. onclick="alert('hello world');"  &lt;script&gt; blocks can only be used inside the maser page.
+javascript code will not run in any of the content (partial) pages by simply placing them in &lt;script&gt; blocks; but it will run in-line, upon firing events: e.g. onclick="alert('hello world');"  &lt;script&gt; blocks can only be used inside a maser page.
 
 #### Search Engines
 
-Although content is rendered partially (the entire page not rendered with each request), search engines will still be able to retrieve the full content as that of a traditional website. It is also still possible to make use of &lt;meta name="robots" content="noindex"&gt; on a master page for excluding target pages from *search* - independently for each content-page.
+Although content is rendered partially (the entire page is not rendered with each request), search engines will still be able to retrieve the full content as that of a traditional website. It is also still possible to make use of &lt;meta name="robots" content="noindex"&gt; on a master page for excluding content pages (partial html) from being *searched* (independently) for each content-page.
 
 #### Some Usage Example
 
-This type of website, basically, loads faster and may offer a user-experience close to that of a desktop application. Although this style of delivering content can be used for any environment, the following are some suitable examples.
+This type of website may offer a user-experience close to that of a desktop application. Although this style of delivering content can be used for any environment, the following are some suitable scenarios.
 
-##### User Experience
-
-- When flickering effect is noticeable, while navigating inside the website.
+- When flickering effect is noticeable, while navigating inside your website.
 - When you want music running in the background, while navigating within your website.
 - Doc sites; where users go back and fourth, quickly and frequently to find content.
 
-Fore more details, run the sample and see *notes* on the /bare path.
+Fore more details, see notes in master/bare.html; or navigate to /bare and expand *notes*, while the website is running.
 
 #### Running the website
 
