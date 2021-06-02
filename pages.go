@@ -61,7 +61,12 @@ func (ws *website) serveRoot(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 
-	// The http Method will not have any effect here. But it's
+	if r.Method != "HEAD" {
+		// nothing to return
+		return
+	}
+
+	// http methods other than GET will not have any effect here. But it's
 	// good to warn the caller.
 	if r.Method != "GET" {
 		w.WriteHeader(http.StatusForbidden)
@@ -108,28 +113,10 @@ func (ws *website) serveRoot(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// This will make the master page to select
-	// the right default page.
-	// if rPath == "/index.html" {
-	// 	rPath = "/"
-	// }
-
 	if ws.pageNotFound(w, r.URL.Path) {
 		// Response is already written by ws.processPageNotFound().
 		return
 	}
-
-	// RawQueryPlaceHolder is a flag to indicate that a post is
-	// submitted to the same location.
-	//
-	// if rPath == "/mypage.html" && r.URL.RawQuery == ws.RawQueryPlaceHolder {
-	//
-	// 	TODO:
-	//     create a handler for your specific action that is to be
-	//     submitted from the html page.
-	//
-	// 	return
-	// }
 
 	// Server the file as-is. This is not part of the master file,
 	// althought it could have its own master.
