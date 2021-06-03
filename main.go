@@ -109,9 +109,20 @@ func (ws *website) start(portNo uint, appPath string) {
 	// See https://github.com/kambahr/go-webconfig.
 	ws.Config = webconfig.NewWebConfig(ws.InstallPath)
 
+	// The default port number is set to a negative number.
+	// If portno is < 0, it means that the default portno
+	// should be used. But if it's > 0, update the config file
+	// so that any other function using it will have the correct one.
 	if portNo > 0 {
 		ws.Config.UpdateConfigValue("", "portno", fmt.Sprintf("%d", portNo))
 		ws.Config.Refresh()
+	}
+
+	// If portno is still < 0, use a default; and set the default here.
+	// You can also set a rule so that the portno is not below or above
+	// a range.
+	if ws.Config.PortNo < 1 {
+		ws.Config.PortNo = 8080
 	}
 
 	ws.RootFullURL = fmt.Sprintf("%s://%s:%d", ws.Config.Proto, ws.Config.HostName, ws.Config.PortNo)
@@ -155,7 +166,7 @@ func (ws *website) start(portNo uint, appPath string) {
 	var svr http.Server
 	{
 		svr = http.Server{
-			Addr:           fmt.Sprintf(":%d", portNo),
+			Addr:           fmt.Sprintf(":%d", ws.Config.PortNo),
 			MaxHeaderBytes: 20480,
 
 			// This prevents http2 calls by the client browser
