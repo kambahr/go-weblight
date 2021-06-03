@@ -111,6 +111,7 @@ func (ws *website) start(portNo uint, appPath string) {
 
 	if portNo > 0 {
 		ws.Config.UpdateConfigValue("", "portno", fmt.Sprintf("%d", portNo))
+		ws.Config.Refresh()
 	}
 
 	ws.RootFullURL = fmt.Sprintf("%s://%s:%d", ws.Config.Proto, ws.Config.HostName, ws.Config.PortNo)
