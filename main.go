@@ -138,7 +138,7 @@ func (ws *website) start(portNo uint, appPath string) {
 	ws.HomePageName = defaultHomePageName
 
 	// Configure the master pages' location.
-	// Master pages are placed in folders under Pages. Antying unter the root
+	// Master pages are placed in folders under Pages. Anything under the root
 	// is under the / path (i.e. mypage.html => http://localhost:8080/mypage.html).
 	t := fmt.Sprintf("%s/html/pages", ws.InstallPath)
 	dirs, _ := getDirectories(t)
