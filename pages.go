@@ -157,10 +157,9 @@ func (ws *website) serveRoot(w http.ResponseWriter, r *http.Request) {
 }
 
 // getRawMasterPage gets the bare master file. The master html file contains
-// the minimum html body that is to disply on your site. Note that with this
-// website uses a unique style, where the master page loads once, and any
-// navigation after that occurs is done with XMLHttpRequest without refresh
-// or re-rendering any part of the page. If the end-user refreshes the page
+// the minimum html body that is to disply on your site. Note that the master 
+// page loads once, and navigation after that occurs is done via XMLHttpRequest 
+// without re-rendering any part of the page. If the end-user refreshes the page
 // the master html file will load again + the last navigated html subject --
 // see setSinglePage().
 func (ws *website) getRawMasterPage() []byte {
