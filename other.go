@@ -32,9 +32,8 @@ func (ws *website) addSuffix(rPath string) string {
 	return rPath
 }
 
-// getFileFromCache will the byte array of your html file either from
-// disk or from the list of byte arrays saved in memory (which will
-// speed up your site).
+// getFileFromCache get the byte array of the html file, either from
+// disk or from the list of byte arrays saved in memory.
 func (ws *website) getFileFromCache(rPath string, physPath string) []byte {
 
 	b := ws.Webutil.Webcache.GetItem(rPath)
