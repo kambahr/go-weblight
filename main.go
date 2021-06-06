@@ -39,9 +39,6 @@ func main() {
 	mWebsite.start(portNoArg, dir)
 }
 
-// func (ws *website) foo(ipAddr string) {
-// 	TODO:
-// }
 func (ws *website) connState(conn net.Conn, connState http.ConnState) {
 
 	// You can block target IP addresses here by closing connection of
@@ -63,10 +60,19 @@ func (ws *website) connState(conn net.Conn, connState http.ConnState) {
 	// of it -- to build on security, content/performance-smart concepts to enhance
 	// your site.
 
-	// If you want to do any processing here, you'd have to use the go statement
-	// so that the processing is done outside of this function (in a speparate
-	// thread).
-	//go ws.foo(conn.RemoteAddr().String())
+	// Check the blocked ips
+	// TODO: log further to revoke permanently or re-instate after a period.
+	ip := strings.Split(strings.Replace(strings.Replace(conn.RemoteAddr().String(), "[", "", -1), "]", "", -1), ":")[0]
+
+	// blank means its ::1 (ipv6 loopback ip)
+	if ip != "" {
+		for i := 0; i < len(ws.Config.BlockedIP); i++ {
+			if ws.Config.BlockedIP[i] == ip {
+				conn.Close()
+				return
+			}
+		}
+	}
 
 	maxConnIODeadLine := 20
 
@@ -115,7 +121,6 @@ func (ws *website) start(portNo uint, appPath string) {
 	// so that any other function using it will have the correct one.
 	if portNo > 0 {
 		ws.Config.UpdateConfigValue("", "portno", fmt.Sprintf("%d", portNo))
-		ws.Config.Refresh()
 	}
 
 	// If portno is still < 0, use a default; and set the default here.
@@ -189,7 +194,7 @@ func (ws *website) start(portNo uint, appPath string) {
 	}
 
 	fmt.Println("Listening to port:", portNo, "for host:", ws.Config.HostName)
-	if ws.Config.Proto == "HTTP" {
+	if strings.ToUpper(ws.Config.Site.Proto) == "HTTP" {
 		log.Fatal(svr.ListenAndServe())
 	} else {
 		if fileOrDirExists(ws.Config.TLS.CertFilePath) &&

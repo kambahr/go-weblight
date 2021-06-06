@@ -17,13 +17,6 @@ type tlsFiles struct {
 	KeyFilePath  string
 }
 
-type config struct {
-	HostName string
-	Proto    string
-	PortNo   int
-	TLS      tlsFiles
-}
-
 // website holds all the global vars and types needed to run a website.
 type website struct {
 
