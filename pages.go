@@ -61,17 +61,26 @@ func (ws *website) serveRoot(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 
-	if r.Method != "HEAD" {
+	if r.Method == "HEAD" {
+		w.WriteHeader(200)
 		// nothing to return
+		// You could set your defautlt response headers here.
 		return
 	}
 
-	// http methods other than GET will not have any effect here. But it's
-	// good to warn the caller.
-	if r.Method != "GET" {
-		w.WriteHeader(http.StatusForbidden)
-		msg := fmt.Sprintf("error %d - %s\n", http.StatusForbidden, http.StatusText(http.StatusForbidden))
-		w.Write([]byte(msg))
+	if !ws.validateRequest(w, r) {
+		return
+	}
+
+	if ws.Config.MaintenanceWindowOn {
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		p := fmt.Sprintf("%s/html/maint-window.html", ws.AppDataPath)
+		b, _ := ioutil.ReadFile(p)
+		b = bytes.ReplaceAll(b, []byte("{{.HostName}}"), []byte(ws.Config.HostName))
+		b = bytes.Replace(b, []byte("{{.ThisYear}}"), []byte(fmt.Sprintf("%d", time.Now().Year())), -1)
+		b = ws.Webutil.RemoveCommentsFromByBiteArry(b, "{{.COMMENT ", "}}")
+		w.WriteHeader(200)
+		w.Write(b)
 		return
 	}
 
@@ -99,13 +108,15 @@ func (ws *website) serveRoot(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// Uncomment if your are using these files.
-	// if rPath == "/sitemap.xml" || rPath == "/robots.txt" {
-	// 	physPath := fmt.Sprintf("%s%s", ws.InstallPath, rPath)
-	// 	bXML, _ := ioutil.ReadFile(physPath)
-	// 	w.Write(bXML)
-	// 	return
-	// }
+	// sitemap.xml and robots.txt
+	if rPath == "/sitemap.xml" || rPath == "/robots.txt" {
+		physPath := fmt.Sprintf("%s%s", ws.InstallPath, rPath)
+		bXML, err := ioutil.ReadFile(physPath)
+		if err == nil {
+			w.Write(bXML)
+			return
+		}
+	}
 
 	if ws.setMasterFilePath(r) {
 		// Reload the master page
@@ -157,8 +168,8 @@ func (ws *website) serveRoot(w http.ResponseWriter, r *http.Request) {
 }
 
 // getRawMasterPage gets the bare master file. The master html file contains
-// the minimum html body that is to disply on your site. Note that the master 
-// page loads once, and navigation after that occurs is done via XMLHttpRequest 
+// the minimum html body that is to disply on your site. Note that the master
+// page loads once, and navigation after that occurs is done via XMLHttpRequest
 // without re-rendering any part of the page. If the end-user refreshes the page
 // the master html file will load again + the last navigated html subject --
 // see setSinglePage().
