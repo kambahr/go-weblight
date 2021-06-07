@@ -118,7 +118,7 @@ func (ws *website) start(portNo int, appPath string) {
 		ConnState: ws.connState,
 	}
 
-	fmt.Println("Listening to port:", portNo, "for host:", ws.Config.Site.HostName)
+	fmt.Println("Listening to port:", ws.Config.Site.PortNo, "for host:", ws.Config.Site.HostName)
 
 	if strings.ToUpper(ws.Config.Site.Proto) == "HTTP" {
 		log.Fatal(svr.ListenAndServe())
