@@ -14,9 +14,7 @@ The browser history is written via the window.onpopstate() event (for a full use
 
 #### Navigation
 
-##### Within A Master Page
-
-There are two ways to navigate from (within) a master page.
+There are two ways to navigate:
 
 - Via getContent() - a javascript function that gets the content in the background (simulating href of an A tag).
 - Using the href of a &lt;a&gt; tag, which moves away from the current master page (traditional way).
